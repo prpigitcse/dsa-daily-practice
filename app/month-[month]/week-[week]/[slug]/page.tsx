@@ -45,14 +45,14 @@ export async function generateMetadata({
             canonical: problem.href,
         },
         openGraph: {
-            title: `${problem.title} | DSA Daily Practice`,
+            title: `${problem.title} | DSA Logbook`,
             description,
             type: "article",
             url: problem.href,
         },
         twitter: {
             card: "summary",
-            title: `${problem.title} | DSA Daily Practice`,
+            title: `${problem.title} | DSA Logbook`,
             description,
         },
     };
@@ -91,7 +91,7 @@ export default async function ProblemPage({
         description: sections.problemStatement || `DSA Problem: ${problem.title}`,
         provider: {
             "@type": "Organization",
-            name: "DSA Daily Practice",
+            name: "DSA Logbook",
         },
     };
 

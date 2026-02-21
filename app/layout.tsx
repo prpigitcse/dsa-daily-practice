@@ -15,21 +15,21 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "DSA Daily Practice",
-    template: "%s | DSA Daily Practice",
+    default: "DSA Logbook",
+    template: "%s | DSA Logbook",
   },
   description:
     "Learn Data Structures & Algorithms through daily practice. A structured, consistency-driven approach to mastering DSA concepts.",
   openGraph: {
-    title: "DSA Daily Practice",
+    title: "DSA Logbook",
     description:
       "Learn Data Structures & Algorithms through daily practice.",
     type: "website",
-    siteName: "DSA Daily Practice",
+    siteName: "DSA Logbook",
   },
   twitter: {
     card: "summary",
-    title: "DSA Daily Practice",
+    title: "DSA Logbook",
     description:
       "Learn Data Structures & Algorithms through daily practice.",
   },
@@ -72,7 +72,7 @@ export default function RootLayout({
               href="/"
               className="text-sm font-semibold tracking-tight hover:text-accent transition-colors"
             >
-              DSA Daily Practice
+              DSA Logbook
             </a>
             <ThemeToggle />
           </div>
@@ -80,7 +80,7 @@ export default function RootLayout({
         <main className="max-w-3xl mx-auto px-6 py-8">{children}</main>
         <footer className="border-t border-card-border mt-16">
           <div className="max-w-3xl mx-auto px-6 py-6 text-center text-xs text-muted">
-            Built with consistency · DSA Daily Practice
+            Built with consistency · DSA Logbook
           </div>
         </footer>
       </body>
