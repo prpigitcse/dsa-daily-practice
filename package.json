@@ -4,11 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "prebuild": "tsx lib/ensureMetadata.ts",
+    "build": "tsx lib/ensureMetadata.ts && next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "ensure-metadata": "tsx lib/ensureMetadata.ts"
   },
   "dependencies": {
+    "highlight.js": "^11.11.1",
     "next": "16.1.6",
     "react": "19.2.3",
     "react-dom": "19.2.3"
@@ -21,6 +24,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
     "tailwindcss": "^4",
+    "tsx": "^4.21.0",
     "typescript": "^5"
   }
 }
