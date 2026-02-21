@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 import ThemeToggle from "./components/ThemeToggle";
 import "./globals.css";
 
@@ -18,11 +19,11 @@ const siteUrl = "https://dsa-daily-practice.vercel.app";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "DSA Logbook — Daily Data Structures & Algorithms Practice",
-    template: "%s | DSA Logbook",
+    default: "Algorithm Logbook — Daily Data Structures & Algorithms Practice",
+    template: "%s | Algorithm Logbook",
   },
   description:
-    "Master Data Structures & Algorithms one problem at a time. DSA Logbook is a free, structured, consistency-driven learning platform with 22+ problems covering arrays, recursion, sorting, searching, number theory, and more.",
+    "Master Data Structures & Algorithms one problem at a time. Algorithm Logbook is a free, structured, consistency-driven learning platform with 22+ problems covering arrays, recursion, sorting, searching, number theory, and more.",
   keywords: [
     "DSA",
     "data structures",
@@ -43,25 +44,25 @@ export const metadata: Metadata = {
     "algorithm tutorial",
     "daily coding practice",
   ],
-  authors: [{ name: "DSA Logbook" }],
-  creator: "DSA Logbook",
-  publisher: "DSA Logbook",
+  authors: [{ name: "Pradosh Ranjan Pattanayak" }],
+  creator: "Pradosh Ranjan Pattanayak",
+  publisher: "Pradosh Ranjan Pattanayak",
   category: "Education",
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "DSA Logbook — Daily Data Structures & Algorithms Practice",
+    title: "Algorithm Logbook — Daily Data Structures & Algorithms Practice",
     description:
       "Master DSA one problem at a time. Free, structured, consistency-driven learning with 22+ problems across arrays, recursion, sorting, and more.",
     type: "website",
-    siteName: "DSA Logbook",
+    siteName: "Algorithm Logbook",
     url: "/",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "DSA Logbook — Daily DSA Practice",
+    title: "Algorithm Logbook — Daily DSA Practice",
     description:
       "Master Data Structures & Algorithms one problem at a time. Free, structured, consistency-driven learning.",
   },
@@ -109,9 +110,10 @@ export default function RootLayout({
           <div className="max-w-3xl mx-auto px-6 h-14 flex items-center justify-between">
             <a
               href="/"
-              className="text-sm font-semibold tracking-tight hover:text-accent transition-colors"
+              className="flex items-center gap-2 text-sm font-semibold tracking-tight hover:text-accent transition-colors"
             >
-              DSA Logbook
+              <img src="/logo.svg" alt="Algorithm Logbook" width={28} height={28} />
+              Algorithm Logbook
             </a>
             <ThemeToggle />
           </div>
@@ -119,9 +121,12 @@ export default function RootLayout({
         <main className="max-w-3xl mx-auto px-6 py-8">{children}</main>
         <footer className="border-t border-card-border mt-16">
           <div className="max-w-3xl mx-auto px-6 py-6 text-center text-xs text-muted">
-            Built with consistency · DSA Logbook
+            Built with consistency · Algorithm Logbook
+            <br />
+            © {new Date().getFullYear()} Pradosh. Educational content for personal learning and reference.
           </div>
         </footer>
+        <Analytics />
       </body>
     </html>
   );

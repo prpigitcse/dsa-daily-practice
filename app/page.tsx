@@ -18,7 +18,7 @@ export default function Home() {
             {
               "@context": "https://schema.org",
               "@type": "WebSite",
-              name: "DSA Logbook",
+              name: "Algorithm Logbook",
               url: "https://dsa-daily-practice.vercel.app",
               description:
                 "Master Data Structures & Algorithms one problem at a time. A free, structured, consistency-driven learning platform.",
@@ -42,7 +42,7 @@ export default function Home() {
         {/* Hero */}
         <section className="mb-10">
           <h1 className="text-3xl font-bold tracking-tight mb-2">
-            DSA Logbook
+            Algorithm Logbook
           </h1>
           <p className="text-muted text-base leading-relaxed mb-6">
             One problem a day. One concept at a time.<br />

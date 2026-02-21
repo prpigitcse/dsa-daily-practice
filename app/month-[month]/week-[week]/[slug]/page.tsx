@@ -55,14 +55,14 @@ export async function generateMetadata({
             canonical: problem.href,
         },
         openGraph: {
-            title: `${problem.title} | DSA Logbook`,
+            title: `${problem.title} | Algorithm Logbook`,
             description,
             type: "article",
             url: problem.href,
         },
         twitter: {
             card: "summary",
-            title: `${problem.title} | DSA Logbook`,
+            title: `${problem.title} | Algorithm Logbook`,
             description,
         },
     };
@@ -108,7 +108,7 @@ export default async function ProblemPage({
             url: `${siteUrl}${problem.href}`,
             provider: {
                 "@type": "Organization",
-                name: "DSA Logbook",
+                name: "Algorithm Logbook",
                 url: siteUrl,
             },
         },
