@@ -35,12 +35,22 @@ export async function generateMetadata({
 
     const sections = parsePythonFile(problem.filePath);
     const description =
-        sections.problemStatement.slice(0, 160) ||
-        `Day ${problem.day} — ${problem.title}`;
+        sections.problemStatement?.slice(0, 155) ||
+        `Day ${problem.day} — ${problem.title}. A structured DSA problem with intuition, approach, complexity analysis, and Python code.`;
 
     return {
         title: problem.title,
         description,
+        keywords: [
+            problem.title,
+            "DSA",
+            "data structures",
+            "algorithms",
+            `week ${problem.week}`,
+            "coding problem",
+            "Python",
+            "interview prep",
+        ],
         alternates: {
             canonical: problem.href,
         },
@@ -84,16 +94,55 @@ export default async function ProblemPage({
     const { previous, next } = getPreviousNext(slug);
 
     // JSON-LD Structured Data
-    const jsonLd = {
-        "@context": "https://schema.org",
-        "@type": "EducationalOccupationalProgram",
-        name: problem.title,
-        description: sections.problemStatement || `DSA Problem: ${problem.title}`,
-        provider: {
-            "@type": "Organization",
-            name: "DSA Logbook",
+    const siteUrl = "https://dsa-daily-practice.vercel.app";
+    const jsonLd = [
+        {
+            "@context": "https://schema.org",
+            "@type": "LearningResource",
+            name: problem.title,
+            description: sections.problemStatement || `DSA Problem: ${problem.title}`,
+            educationalLevel: "Beginner",
+            learningResourceType: "Problem",
+            inLanguage: "en",
+            isAccessibleForFree: true,
+            url: `${siteUrl}${problem.href}`,
+            provider: {
+                "@type": "Organization",
+                name: "DSA Logbook",
+                url: siteUrl,
+            },
         },
-    };
+        {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+                {
+                    "@type": "ListItem",
+                    position: 1,
+                    name: "Home",
+                    item: siteUrl,
+                },
+                {
+                    "@type": "ListItem",
+                    position: 2,
+                    name: `Month ${problem.month}`,
+                    item: `${siteUrl}/#month-${problem.month}`,
+                },
+                {
+                    "@type": "ListItem",
+                    position: 3,
+                    name: `Week ${problem.week}`,
+                    item: `${siteUrl}/#month-${problem.month}-week-${problem.week}`,
+                },
+                {
+                    "@type": "ListItem",
+                    position: 4,
+                    name: problem.title,
+                    item: `${siteUrl}${problem.href}`,
+                },
+            ],
+        },
+    ];
 
     return (
         <>
