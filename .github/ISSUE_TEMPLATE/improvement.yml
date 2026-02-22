@@ -1,0 +1,28 @@
+name: 💡 Improvement Suggestion
+description: Suggest an enhancement to explanation, structure, or clarity.
+title: "[Suggestion] Short title"
+labels: ["enhancement"]
+body:
+  - type: input
+    id: page
+    attributes:
+      label: Related Page (if applicable)
+      description: Provide the URL of the page related to this suggestion.
+      placeholder: https://algo.ppradosh.com/...
+    validations:
+      required: false
+
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: What do you suggest?
+      description: Describe the improvement clearly.
+      placeholder: Explain your suggestion.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reasoning
+    attributes:
+      label: Why would this improve the content?
+      description: Optional explanation of reasoning.

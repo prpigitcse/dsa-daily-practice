@@ -287,14 +287,14 @@ export default async function ProblemPage({
                     aria-label="Problem navigation"
                     className="mt-12 pt-8 border-t border-card-border"
                 >
-                    <div className="flex justify-between gap-4">
+                    <div className="flex justify-between gap-3">
                         {previous ? (
                             <Link
                                 href={previous.href}
-                                className="group flex-1 flex items-center gap-3 px-4 py-3 rounded-xl border border-card-border bg-card hover:border-accent/40 hover:shadow-[var(--shadow)] transition-all duration-200"
+                                className="group flex-1 min-w-0 flex items-center gap-2 px-3 py-3 rounded-xl border border-card-border bg-card hover:border-accent/40 hover:shadow-[var(--shadow)] transition-all duration-200"
                             >
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-muted group-hover:text-accent transition-colors shrink-0"><polyline points="15 18 9 12 15 6" /></svg>
-                                <div className="overflow-hidden">
+                                <div className="min-w-0 overflow-hidden">
                                     <div className="text-xs text-muted">Previous</div>
                                     <div className="text-sm font-medium truncate group-hover:text-accent transition-colors">
                                         {previous.title}
@@ -308,9 +308,9 @@ export default async function ProblemPage({
                         {next ? (
                             <Link
                                 href={next.href}
-                                className="group flex-1 flex items-center justify-end gap-3 px-4 py-3 rounded-xl border border-card-border bg-card hover:border-accent/40 hover:shadow-[var(--shadow)] transition-all duration-200 text-right"
+                                className="group flex-1 min-w-0 flex items-center justify-end gap-2 px-3 py-3 rounded-xl border border-card-border bg-card hover:border-accent/40 hover:shadow-[var(--shadow)] transition-all duration-200 text-right"
                             >
-                                <div className="overflow-hidden">
+                                <div className="min-w-0 overflow-hidden">
                                     <div className="text-xs text-muted">Next</div>
                                     <div className="text-sm font-medium truncate group-hover:text-accent transition-colors">
                                         {next.title}
@@ -323,6 +323,23 @@ export default async function ProblemPage({
                         )}
                     </div>
                 </nav>
+
+                {/* GitHub Issues */}
+                <div className="mt-8 pt-6 border-t border-card-border flex justify-center">
+                    <a
+                        href="https://github.com/prpigitcse/dsa-daily-practice/issues"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 text-xs text-muted hover:text-accent transition-colors duration-200"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="12" y1="8" x2="12" y2="12" />
+                            <line x1="12" y1="16" x2="12.01" y2="16" />
+                        </svg>
+                        Report an issue or suggest an improvement
+                    </a>
+                </div>
             </article>
         </>
     );

@@ -15,6 +15,7 @@ interface CodeBlockProps {
 export default function CodeBlock({ code, explanation }: CodeBlockProps) {
     const [showCode, setShowCode] = useState(false);
     const [showExplain, setShowExplain] = useState(false);
+    const [copied, setCopied] = useState(false);
     const codeRef = useRef<HTMLElement>(null);
 
     useEffect(() => {
@@ -22,6 +23,16 @@ export default function CodeBlock({ code, explanation }: CodeBlockProps) {
             hljs.highlightElement(codeRef.current);
         }
     }, [showCode, code]);
+
+    const handleCopy = async () => {
+        try {
+            await navigator.clipboard.writeText(code);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+        } catch {
+            // clipboard API unavailable — fail silently
+        }
+    };
 
     return (
         <div className="mt-6">
@@ -62,11 +73,33 @@ export default function CodeBlock({ code, explanation }: CodeBlockProps) {
 
             {showCode && (
                 <div className="mt-3 animate-in fade-in slide-in-from-top-2 duration-300">
-                    <pre className="rounded-xl overflow-hidden shadow-lg">
-                        <code ref={codeRef} className="language-python">
-                            {code}
-                        </code>
-                    </pre>
+                    {/* Code block with copy button */}
+                    <div className="relative group/code">
+                        <pre className="rounded-xl overflow-hidden shadow-lg">
+                            <code ref={codeRef} className="language-python">
+                                {code}
+                            </code>
+                        </pre>
+
+                        <button
+                            onClick={handleCopy}
+                            title={copied ? "Copied!" : "Copy to clipboard"}
+                            className="absolute top-3 right-3 p-1.5 rounded-md bg-white/10 hover:bg-white/20 text-white/70 hover:text-white transition-all duration-200 opacity-0 group-hover/code:opacity-100 focus:opacity-100 cursor-pointer"
+                        >
+                            {copied ? (
+                                /* Checkmark icon */
+                                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                    <polyline points="20 6 9 17 4 12" />
+                                </svg>
+                            ) : (
+                                /* Copy icon */
+                                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                                </svg>
+                            )}
+                        </button>
+                    </div>
 
                     {explanation && (
                         <div className="mt-3">

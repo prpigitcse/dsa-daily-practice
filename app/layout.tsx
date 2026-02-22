@@ -124,6 +124,16 @@ export default function RootLayout({
             Built with consistency · Algorithm Logbook
             <br />
             © {new Date().getFullYear()} Pradosh. Educational content for personal learning and reference.
+            <br />
+            <span className="inline-flex items-center gap-2 mt-2">
+              <a href="/privacy" className="hover:text-accent transition-colors">
+                Privacy Policy
+              </a>
+              <span aria-hidden="true">·</span>
+              <a href="/sitemap" className="hover:text-accent transition-colors">
+                Sitemap
+              </a>
+            </span>
           </div>
         </footer>
         <Analytics />
