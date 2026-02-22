@@ -1,6 +1,6 @@
 import { getAllProblems } from "@/lib/parsePracticeStructure";
 
-const baseUrl = "https://dsa-daily-practice.vercel.app";
+const baseUrl = "https://algo.ppradosh.com";
 
 export function GET() {
     const problems = getAllProblems();
