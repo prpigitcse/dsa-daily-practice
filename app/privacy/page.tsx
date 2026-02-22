@@ -33,9 +33,24 @@ export default function PrivacyPage() {
                 >
                     Vercel Analytics
                 </a>{" "}
-                to understand general usage patterns such as page views and performance
-                metrics. Vercel Analytics does not use cookies for tracking and does not
+                to understand general usage patterns such as page views and referrer
+                data. Vercel Analytics does not use cookies for tracking and does not
                 collect personally identifiable information.
+            </p>
+
+            <p>
+                We also use{" "}
+                <a
+                    href="https://vercel.com/docs/speed-insights"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-accent hover:underline"
+                >
+                    Vercel Speed Insights
+                </a>{" "}
+                to measure real-world performance metrics (Core Web Vitals) such as page
+                load times and interaction responsiveness. This data is aggregated and
+                anonymous — no personal information or cookies are involved.
             </p>
 
             <p>
