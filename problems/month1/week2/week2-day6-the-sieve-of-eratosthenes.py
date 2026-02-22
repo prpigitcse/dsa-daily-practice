@@ -1,57 +1,50 @@
 """
 Problem Statement:
-Given an integer n, return the count of prime numbers that are strictly less than n. Use the Sieve of Eratosthenes — do not simply loop and call an is_prime function for each number. Input: 10 → 4 (primes: 2, 3, 5, 7). Input: 0 → 0. Input: 1 → 0.
+Given an integer $N$, return a list of all prime numbers from 2 to $N$ (inclusive) using the Sieve of Eratosthenes algorithm. For example, $N = 30$ → [2, 3, 5, 7, 11, 13, 17, 19, 23, 29].
 
 Intuition:
-Instead of checking each number individually for primality (O(N√N) total), the Sieve of Eratosthenes eliminates composites in bulk. Start by assuming all numbers are prime. For each prime found, mark all its multiples as composite. What remains are the primes. This is a "mark and sweep" approach.
+Instead of checking each number individually (which takes $O(\sqrt{N})$ per number), the Sieve marks all multiples of each prime as composite in bulk. Start from the smallest prime (2), mark all its multiples as not prime, then move to the next unmarked number, and repeat. The outer loop only runs up to $\sqrt{N}$ because any composite number's smallest prime factor must be $\leq \sqrt{N}$.
 
 Approach:
-1. If n < 2, return 0.
-2. Create a boolean array of size n, initialized to True (all assumed prime).
-3. Mark indices 0 and 1 as False (not prime).
-4. For each number i from 2 to √n: if primes[i] is True, mark all multiples of i (starting from i*i) as False.
-5. Count the True values remaining in the array.
+1. Create a boolean array `is_prime` of size $N+1$, initialized to True.
+2. Set `is_prime[0] = is_prime[1] = False`.
+3. For each $i$ from 2 to $\lfloor \sqrt{N} \rfloor$: if `is_prime[i]` is True, mark all multiples starting at $i^2$ as False.
+4. Collect all indices where `is_prime[i]` is still True.
 
 Time Complexity:
-O(N log log N) — this is the proven time complexity of the Sieve of Eratosthenes, nearly linear
+$O(N \log \log N)$ — from the harmonic series over primes
 
 Space Complexity:
-O(N) — the boolean array stores one entry per number up to n
+$O(N)$ — for the boolean sieve array
 
 Common Mistakes:
-- Starting the inner loop from 2*i instead of i*i (all multiples less than i*i have already been marked by smaller primes)
-- Using the range as inclusive of n (the problem asks for primes strictly less than n)
-- Calling is_prime(i) inside a loop — this defeats the purpose of the sieve
-- Not marking 0 and 1 as non-prime
+- Starting the inner loop from $2i$ instead of $i^2$ — the smaller multiples were already marked by earlier primes
+- Not marking 0 and 1 as non-prime before collecting results
+- Using a list of integers instead of a boolean array — wastes memory
+
+Code Explanation:
+- `is_prime = [True] * (n + 1)`: Creates a list of $N+1$ boolean values, all initially True. Index $i$ represents whether $i$ is prime.
+- `is_prime[0] = is_prime[1] = False`: 0 and 1 are not prime by definition.
+- `for i in range(2, int(n**0.5) + 1)`: Outer loop up to $\sqrt{N}$ (composites are guaranteed to have a factor $\leq \sqrt{N}$).
+- `if is_prime[i]`: Only process numbers that haven't been marked composite yet.
+- `for j in range(i * i, n + 1, i)`: Mark multiples of `i` starting at $i^2$ (smaller multiples were already sieved by earlier primes). Step size is `i`.
+- `is_prime[j] = False`: Mark the composite number.
+- `return [i for i in range(2, n + 1) if is_prime[i]]`: Collect all indices still marked True.
 
 Final Thoughts:
-The Sieve of Eratosthenes is one of the oldest algorithms in mathematics (circa 200 BC). It demonstrates a powerful algorithmic theme: precomputation. Instead of answering each query independently, compute all answers at once. This trade-off of space for time is a recurring pattern in DSA. The sieve can find all primes below 10 million in under a second.
+The Sieve of Eratosthenes is the gold standard for generating all primes up to $N$. Understanding why the inner loop starts at $i^2$ (not $2i$) and why the outer loop only goes to $\sqrt{N}$ is key to grasping its efficiency.
 """
 
-# The Problem: Count Primes
-# Given an integer n, return the number of prime numbers that are strictly less than n.
-# Input: 10 Output: 4 (Primes are 2, 3, 5, 7)
-# Input: 0  Output: 0
-# Input: 1  Output: 0
-# Constraint:You must use the Sieve of Eratosthenes. Do not just loop and call your is_prime function.
+# Week 2 Day 6: The Sieve of Eratosthenes
+# Given an integer N, return all prime numbers from 2 to N.
 
-def count_primes(n):
-    if n < 2:
-        return 0
-    primes = [True] * n
-    primes[0] = primes[1] = False
-
+def sieve_of_eratosthenes(n):
+    is_prime = [True] * (n + 1)
+    is_prime[0] = is_prime[1] = False
     for i in range(2, int(n**0.5) + 1):
-        if primes[i]:
-            for multiple in range(i*i, n, i):
-                primes[multiple] = False
+        if is_prime[i]:
+            for j in range(i * i, n + 1, i):
+                is_prime[j] = False
+    return [i for i in range(2, n + 1) if is_prime[i]]
 
-    return sum(primes)
-
-print(count_primes(10))
-print(count_primes(0))
-print(count_primes(1))
-print(count_primes(2))
-print(count_primes(20))
-print(count_primes(100))
-print(count_primes(1000))
+print(sieve_of_eratosthenes(30))

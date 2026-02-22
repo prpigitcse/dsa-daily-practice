@@ -6,6 +6,7 @@ import {
     getProblemBySlug,
     parsePythonFile,
 } from "@/lib/parsePracticeStructure";
+import { renderMarkdown } from "@/lib/renderMarkdown";
 import CodeBlock from "@/app/components/CodeBlock";
 import MarkComplete from "@/app/components/MarkComplete";
 
@@ -70,9 +71,7 @@ export async function generateMetadata({
 
 // ─── Page Component ────────────────────────────────────────────────────────
 
-export default async function ProblemPage({
-    params,
-}: PageProps) {
+export default async function ProblemPage({ params }: PageProps) {
     const { slug } = await params;
     const problem = getProblemBySlug(slug);
 
@@ -93,6 +92,27 @@ export default async function ProblemPage({
     const sections = parsePythonFile(problem.filePath);
     const { previous, next } = getPreviousNext(slug);
 
+    // Render all text sections through Markdown + LaTeX pipeline in parallel
+    const [
+        problemStatementHtml,
+        intuitionHtml,
+        approachHtml,
+        timeComplexityHtml,
+        spaceComplexityHtml,
+        commonMistakesHtml,
+        finalThoughtsHtml,
+        codeExplanationHtml,
+    ] = await Promise.all([
+        renderMarkdown(sections.problemStatement),
+        renderMarkdown(sections.intuition),
+        renderMarkdown(sections.approach),
+        renderMarkdown(sections.timeComplexity),
+        renderMarkdown(sections.spaceComplexity),
+        renderMarkdown(sections.commonMistakes),
+        renderMarkdown(sections.finalThoughts),
+        renderMarkdown(sections.codeExplanation),
+    ]);
+
     // JSON-LD Structured Data
     const siteUrl = "https://dsa-daily-practice.vercel.app";
     const jsonLd = [
@@ -100,7 +120,8 @@ export default async function ProblemPage({
             "@context": "https://schema.org",
             "@type": "LearningResource",
             name: problem.title,
-            description: sections.problemStatement || `DSA Problem: ${problem.title}`,
+            description:
+                sections.problemStatement || `DSA Problem: ${problem.title}`,
             educationalLevel: "Beginner",
             learningResourceType: "Problem",
             inLanguage: "en",
@@ -116,12 +137,7 @@ export default async function ProblemPage({
             "@context": "https://schema.org",
             "@type": "BreadcrumbList",
             itemListElement: [
-                {
-                    "@type": "ListItem",
-                    position: 1,
-                    name: "Home",
-                    item: siteUrl,
-                },
+                { "@type": "ListItem", position: 1, name: "Home", item: siteUrl },
                 {
                     "@type": "ListItem",
                     position: 2,
@@ -156,10 +172,7 @@ export default async function ProblemPage({
                 <nav aria-label="Breadcrumb" className="mb-6">
                     <ol className="flex items-center gap-1.5 text-sm text-muted">
                         <li>
-                            <Link
-                                href="/"
-                                className="hover:text-accent transition-colors"
-                            >
+                            <Link href="/" className="hover:text-accent transition-colors">
                                 Home
                             </Link>
                         </li>
@@ -201,73 +214,75 @@ export default async function ProblemPage({
 
                 {/* Content Sections */}
                 <div className="space-y-8">
-                    {sections.problemStatement && (
+                    {problemStatementHtml && (
                         <ContentSection
                             icon="📋"
                             title="Problem Statement"
-                            content={sections.problemStatement}
+                            html={problemStatementHtml}
                         />
                     )}
 
-                    {sections.intuition && (
+                    {intuitionHtml && (
                         <ContentSection
                             icon="💡"
                             title="Intuition"
-                            content={sections.intuition}
+                            html={intuitionHtml}
                         />
                     )}
 
-                    {sections.approach && (
+                    {approachHtml && (
                         <ContentSection
                             icon="🔧"
                             title="Approach"
-                            content={sections.approach}
+                            html={approachHtml}
                         />
                     )}
 
-                    {(sections.timeComplexity || sections.spaceComplexity) && (
+                    {(timeComplexityHtml || spaceComplexityHtml) && (
                         <section className="rounded-xl border border-card-border bg-card p-6">
                             <h2 className="text-base font-semibold mb-4 flex items-center gap-2">
                                 <span>⚡</span> Complexity Analysis
                             </h2>
                             <div className="grid grid-cols-2 gap-4">
-                                {sections.timeComplexity && (
+                                {timeComplexityHtml && (
                                     <div className="p-3 rounded-lg bg-muted-bg">
-                                        <div className="text-xs text-muted uppercase tracking-wider mb-1">
+                                        <div className="text-xs text-muted uppercase tracking-wider mb-2">
                                             Time
                                         </div>
-                                        <div className="text-sm font-mono font-medium">
-                                            {sections.timeComplexity}
-                                        </div>
+                                        <div
+                                            className="text-sm font-medium [&_.katex]:text-foreground [&_p]:m-0"
+                                            dangerouslySetInnerHTML={{ __html: timeComplexityHtml }}
+                                        />
                                     </div>
                                 )}
-                                {sections.spaceComplexity && (
+                                {spaceComplexityHtml && (
                                     <div className="p-3 rounded-lg bg-muted-bg">
-                                        <div className="text-xs text-muted uppercase tracking-wider mb-1">
+                                        <div className="text-xs text-muted uppercase tracking-wider mb-2">
                                             Space
                                         </div>
-                                        <div className="text-sm font-mono font-medium">
-                                            {sections.spaceComplexity}
-                                        </div>
+                                        <div
+                                            className="text-sm font-medium [&_.katex]:text-foreground [&_p]:m-0"
+                                            dangerouslySetInnerHTML={{ __html: spaceComplexityHtml }}
+                                        />
                                     </div>
                                 )}
                             </div>
                         </section>
                     )}
 
-                    {sections.commonMistakes && (
+                    {commonMistakesHtml && (
                         <ContentSection
                             icon="⚠️"
                             title="Common Mistakes"
-                            content={sections.commonMistakes}
+                            html={commonMistakesHtml}
                         />
                     )}
 
-                    {sections.finalThoughts && (
+                    {finalThoughtsHtml && (
                         <ContentSection
                             icon="🎯"
                             title="Final Thoughts"
-                            content={sections.finalThoughts}
+                            html={finalThoughtsHtml}
                         />
                     )}
 
@@ -276,7 +291,7 @@ export default async function ProblemPage({
                         <section>
                             <CodeBlock
                                 code={sections.code}
-                                explanation={sections.approach || undefined}
+                                explanationHtml={codeExplanationHtml || undefined}
                             />
                         </section>
                     )}
@@ -350,20 +365,21 @@ export default async function ProblemPage({
 function ContentSection({
     icon,
     title,
-    content,
+    html,
 }: {
     icon: string;
     title: string;
-    content: string;
+    html: string;
 }) {
     return (
         <section className="rounded-xl border border-card-border bg-card p-6">
             <h2 className="text-base font-semibold mb-3 flex items-center gap-2">
                 <span>{icon}</span> {title}
             </h2>
-            <div className="text-sm leading-relaxed text-muted whitespace-pre-wrap">
-                {content}
-            </div>
+            <div
+                className="text-sm leading-relaxed text-muted [&_p]:mb-2 [&_p:last-child]:mb-0 [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:space-y-1 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-1 [&_.katex]:text-foreground"
+                dangerouslySetInnerHTML={{ __html: html }}
+            />
         </section>
     );
 }

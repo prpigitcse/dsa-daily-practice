@@ -10,9 +10,10 @@ hljs.registerLanguage("python", python);
 interface CodeBlockProps {
     code: string;
     explanation?: string;
+    explanationHtml?: string;
 }
 
-export default function CodeBlock({ code, explanation }: CodeBlockProps) {
+export default function CodeBlock({ code, explanation, explanationHtml }: CodeBlockProps) {
     const [showCode, setShowCode] = useState(false);
     const [showExplain, setShowExplain] = useState(false);
     const [copied, setCopied] = useState(false);
@@ -101,7 +102,7 @@ export default function CodeBlock({ code, explanation }: CodeBlockProps) {
                         </button>
                     </div>
 
-                    {explanation && (
+                    {(explanationHtml || explanation) && (
                         <div className="mt-3">
                             <button
                                 onClick={() => setShowExplain(!showExplain)}
@@ -126,8 +127,11 @@ export default function CodeBlock({ code, explanation }: CodeBlockProps) {
                             </button>
 
                             {showExplain && (
-                                <div className="mt-2 p-4 rounded-lg bg-muted-bg border border-card-border text-sm leading-relaxed whitespace-pre-wrap">
-                                    {explanation}
+                                <div className="mt-2 p-4 rounded-lg bg-muted-bg border border-card-border text-sm leading-relaxed [&_p]:mb-2 [&_p:last-child]:mb-0 [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:space-y-1 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-1 [&_.katex]:text-foreground">
+                                    {explanationHtml
+                                        ? <div dangerouslySetInnerHTML={{ __html: explanationHtml }} />
+                                        : explanation
+                                    }
                                 </div>
                             )}
                         </div>

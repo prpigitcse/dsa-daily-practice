@@ -1,30 +1,41 @@
 """
 Problem Statement:
-Write a recursive function reverse_string(s) that returns the reversed string. Input: "hello" → Output: "olleh". Input: "abc" → Output: "cba". You must use recursion — no loops or slicing tricks like [::-1].
+Write a recursive function `reverse_string(s)` that returns the reversed string. Input: "hello" → Output: "olleh". Input: "abc" → Output: "cba". You must use recursion — no loops or `[::-1]`.
 
 Intuition:
-The recursive insight is: reversing a string means putting the first character at the end, after reversing the rest. Alternatively, you can recurse to the end of the string and build the result on the way back. The base case is reaching the end of the string (index == len). Each recursive call processes one character deeper, and concatenation happens on the way back up.
+Reversing recursively: recurse to the end of the string, then append characters in reverse order as the stack unwinds. The $i$-th call places `s[i]` after all characters from index $i+1$ onward.
 
 Approach:
 1. Use an index parameter (default 0) to track position.
-2. Base case: if index == len(str), return an empty string "".
-3. Recursive case: return reverse_string(str, index + 1) + str[index].
-4. This recurses to the end first, then appends characters in reverse order as the stack unwinds.
+2. Base case: if `index == len(str)`, return `""`.
+3. Recursive case: return `reverse_string(str, index + 1) + str[index]`.
+4. This recurses to the end first, then appends characters in reverse on the way back.
 
 Time Complexity:
-O(N) recursive calls, but O(N^2) total due to string concatenation creating new strings at each step
+$O(N)$ recursive calls, but $O(N^2)$ total due to string concatenation creating a new string at each level
 
 Space Complexity:
-O(N) for the recursion call stack
+$O(N)$ for the recursion call stack
 
 Common Mistakes:
-- Using [::-1] slicing — this works but defeats the purpose of learning recursion
-- Not understanding how the concatenation order creates the reversal (the deepest character is added first)
-- String concatenation in Python creates new strings, making this O(N^2) — for production, use a list and join
-- Forgetting the base case, leading to infinite recursion
+- Using `[::-1]` slicing — correct but defeats the purpose of learning recursion
+- Not understanding how the concatenation order creates the reversal
+- String concatenation in Python creates new strings — $O(N^2)$ total; use a list + join for production
+- Forgetting the base case, causing infinite recursion
+
+Code Explanation:
+- `def reverse_string(str, index=0)`: Accepts the string and a current `index`, defaulting to 0 so callers don't need to pass it.
+- `if index == len(str): return ""`: **Base case**: when `index` reaches the end of the string, return an empty string to start unwinding.
+- `return reverse_string(str, index+1) + str[index]`: **Recursive case**: first recurse deeper (`index+1`), then concatenate `str[index]` **after** the result of the deeper call.
+- The key to understanding the reversal is that `str[index]` is appended **after** the deeper call result. So for `"abc"`:
+    - `reverse_string("abc", 0)` = `reverse_string("abc", 1)` + `"a"`
+    - `reverse_string("abc", 1)` = `reverse_string("abc", 2)` + `"b"`
+    - `reverse_string("abc", 2)` = `reverse_string("abc", 3)` + `"c"`
+    - `reverse_string("abc", 3)` = `""`
+    - Unwinding: `""` + `"c"` + `"b"` + `"a"` = `"cba"`.
 
 Final Thoughts:
-This problem shows how recursion can replace iteration for string processing. The pattern of "recurse to the end, then build on the way back" is important — it appears in tree traversals and many other recursive algorithms. Understanding the call stack unwinding process is key to grasping how this reversal works.
+The pattern of "recurse to the end, then build on the way back" appears in tree traversals and many recursive algorithms. Understanding the call stack unwinding is key to grasping how this reversal works.
 """
 
 # The Problem: Reverse a String (Recursive)

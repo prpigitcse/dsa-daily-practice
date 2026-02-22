@@ -1,221 +1,58 @@
 """
 Problem Statement:
-Write a function that returns True if a number n is prime, and False otherwise. A prime number is greater than 1 and has no positive divisors other than 1 and itself. Input: 7 → True. Input: 12 → False (divisible by 2, 3, 4, 6). Input: 1 → False.
+Given an integer $N$, determine if it is a prime number. A prime is a number greater than 1 that has no divisors other than 1 and itself. Input: 29 → True. Input: 30 → False.
 
 Intuition:
-The naive approach checks all numbers from 2 to n-1, which is O(N). The key optimization is: if n has a divisor d, then n/d is also a divisor. One of them must be ≤ √n. Therefore, we only need to check from 2 to √n. This reduces the complexity from O(N) to O(√N), a massive improvement for large numbers.
+If $N$ has a factor $f > \sqrt{N}$, then $N/f < \sqrt{N}$ is also a factor — so the smaller factor would already have been found. This means we only need to test divisors up to $\sqrt{N}$, reducing the check from $O(N)$ to $O(\sqrt{N})$.
 
 Approach:
-1. If n ≤ 1, return False (1 is not prime by definition).
-2. Loop from 2 to int(√n) + 1.
-3. If any number in this range divides n evenly (n % i == 0), return False.
-4. If no divisor is found, return True.
+1. Return False for $N \leq 1$ (by definition, not prime).
+2. Return True for $N = 2$ (only even prime).
+3. Return False for even $N > 2$.
+4. Loop odd divisors from 3 to $\lfloor \sqrt{N} \rfloor + 1$ (step 2).
+5. If any divisor evenly divides $N$, return False.
+6. Otherwise return True.
 
 Time Complexity:
-O(√N) — we only check up to the square root of N
+$O(\sqrt{N})$ — we only check up to the square root
 
 Space Complexity:
-O(1) — only loop variables
+$O(1)$ — no extra space
 
 Common Mistakes:
-- Forgetting that 1 is NOT a prime number
-- Using range(2, n) instead of range(2, int(n**0.5) + 1), making it O(N) instead of O(√N)
-- Not handling 2 correctly: it is the only even prime number
-- Using n**0.5 without int(), which can cause floating-point comparison issues
+- Checking all $N$ divisors instead of just up to $\sqrt{N}$
+- Forgetting that 2 is prime and even (the only even prime)
+- Using `range(2, N)` instead of `range(3, int(N**0.5)+1, 2)`
+
+Code Explanation:
+- `if n <= 1: return False`: 0 and 1 are not prime by definition.
+- `if n == 2: return True`: 2 is the only even prime; must be handled before the even check.
+- `if n % 2 == 0: return False`: All other even numbers are not prime (eliminates ~half the candidates immediately).
+- `for i in range(3, int(n**0.5) + 1, 2)`: Starts at 3, increments by 2 (odd numbers only, since even have been eliminated), stops at $\lfloor \sqrt{N} \rfloor$ (inclusive due to `+1`).
+- `int(n**0.5)`: Computes $\sqrt{N}$ as a float and casts to int, giving the floor value.
+- `if n % i == 0: return False`: Found a divisor; not prime.
+- `return True`: No divisors found in range; it's prime.
 
 Final Thoughts:
-The √N optimization is a fundamental technique in number theory. It reduces a 1-billion-step loop to about 31,623 steps. This same principle (if a factor exists, its complement must be on the other side of √N) appears in many problems. For even faster primality testing at scale, look into the Miller-Rabin test.
+The $\sqrt{N}$ optimization is one of the most important tricks in number theory problems. This exact technique is used in the Sieve of Eratosthenes (Day 6) and prime factorization (Day 7).
 """
 
-# Check for Prime
-# Write a function that returns True if a number n is prime, and False otherwise.A prime number is a number greater than 1 that has no positive divisors other than 1 and itself.
-# Input: 7  Output: True
-# Input: 12  Output: False (Divisible by 2, 3, 4, 6)
-# Input: 1  Output: False (1 is not prime)
-# Constraint:You must optimize the loop.Naive Approach: Loop from 2 to n-1. This is O(N) and will fail for large numbers (like 1 billion).Optimized Approach: Loop from 2 to sqrt(n). This is O(sqrt(N)).
+# Week 2 Day 5: Prime Check
+# Given an integer N, determine if it is a prime number.
 
 def is_prime(n):
     if n <= 1:
         return False
-    for i in range(2, int(n**0.5) + 1):
+    if n == 2:
+        return True
+    if n % 2 == 0:
+        return False
+    for i in range(3, int(n**0.5) + 1, 2):
         if n % i == 0:
             return False
     return True
 
-print(is_prime(7))
-print(is_prime(12))
-print(is_prime(0))
-print(is_prime(1))
-print(is_prime(2))
-print(is_prime(3))
-print(is_prime(4))
-print(is_prime(5))
-print(is_prime(6))
-print(is_prime(7))
-print(is_prime(8))
-print(is_prime(9))
-print(is_prime(10))
-print(is_prime(11))
-print(is_prime(12))
-print(is_prime(13))
-print(is_prime(14))
-print(is_prime(15))
-print(is_prime(16))
-print(is_prime(17))
-print(is_prime(18))
-print(is_prime(19))
-print(is_prime(20))
-print(is_prime(21))
-print(is_prime(22))
-print(is_prime(23))
-print(is_prime(24))
-print(is_prime(25))
-print(is_prime(26))
-print(is_prime(27))
-print(is_prime(28))
-print(is_prime(29))
-print(is_prime(30))
-print(is_prime(31))
-print(is_prime(32))
-print(is_prime(33))
-print(is_prime(34))
-print(is_prime(35))
-print(is_prime(36))
-print(is_prime(37))
-print(is_prime(38))
-print(is_prime(39))
-print(is_prime(40))
-print(is_prime(41))
-print(is_prime(42))
-print(is_prime(43))
-print(is_prime(44))
-print(is_prime(45))
-print(is_prime(46))
-print(is_prime(47))
-print(is_prime(48))
-print(is_prime(49))
-print(is_prime(50))
-print(is_prime(51))
-print(is_prime(52))
-print(is_prime(53))
-print(is_prime(54))
-print(is_prime(55))
-print(is_prime(56))
-print(is_prime(57))
-print(is_prime(58))
-print(is_prime(59))
-print(is_prime(60))
-print(is_prime(61))
-print(is_prime(62))
-print(is_prime(63))
-print(is_prime(64))
-print(is_prime(65))
-print(is_prime(66))
-print(is_prime(67))
-print(is_prime(68))
-print(is_prime(69))
-print(is_prime(70))
-print(is_prime(71))
-print(is_prime(72))
-print(is_prime(73))
-print(is_prime(74))
-print(is_prime(75))
-print(is_prime(76))
-print(is_prime(77))
-print(is_prime(78))
-print(is_prime(79))
-print(is_prime(80))
-print(is_prime(81))
-print(is_prime(82))
-print(is_prime(83))
-print(is_prime(84))
-print(is_prime(85))
-print(is_prime(86))
-print(is_prime(87))
-print(is_prime(88))
-print(is_prime(89))
-print(is_prime(90))
-print(is_prime(91))
-print(is_prime(92))
-print(is_prime(93))
-print(is_prime(94))
-print(is_prime(95))
-print(is_prime(96))
-print(is_prime(97))
-print(is_prime(98))
-print(is_prime(99))
-print(is_prime(100))
-print(is_prime(101))
-print(is_prime(102))
-print(is_prime(103))
-print(is_prime(104))
-print(is_prime(105))
-print(is_prime(106))
-print(is_prime(107))
-print(is_prime(108))
-print(is_prime(109))
-print(is_prime(110))
-print(is_prime(111))
-print(is_prime(112))
-print(is_prime(113))
-print(is_prime(114))
-print(is_prime(115))
-print(is_prime(116))
-print(is_prime(117))
-print(is_prime(118))
-print(is_prime(119))
-print(is_prime(120))
-print(is_prime(121))
-print(is_prime(122))
-print(is_prime(123))
-print(is_prime(124))
-print(is_prime(125))
-print(is_prime(126))
-print(is_prime(127))
-print(is_prime(128))
-print(is_prime(129))
-print(is_prime(130))
-print(is_prime(131))
-print(is_prime(132))
-print(is_prime(133))
-print(is_prime(134))
-print(is_prime(135))
-print(is_prime(136))
-print(is_prime(137))
-print(is_prime(138))
-print(is_prime(139))
-print(is_prime(140))
-print(is_prime(141))
-print(is_prime(142))
-print(is_prime(143))
-print(is_prime(144))
-print(is_prime(145))
-print(is_prime(146))
-print(is_prime(147))
-print(is_prime(148))
-print(is_prime(149))
-print(is_prime(150))
-print(is_prime(151))
-print(is_prime(152))
-print(is_prime(153))
-print(is_prime(154))
-print(is_prime(155))
-print(is_prime(156))
-print(is_prime(157))
-print(is_prime(158))
-print(is_prime(159))
-print(is_prime(160))
-print(is_prime(161))
-print(is_prime(162))
-print(is_prime(163))
-print(is_prime(164))
-print(is_prime(165))
-print(is_prime(166))
-print(is_prime(167))
-print(is_prime(168))
-print(is_prime(169))
-print(is_prime(170))
-print(is_prime(171))
-print(is_prime(172))
-print(is_prime(173))
-print(is_prime(174))
+print(is_prime(29))  # True
+print(is_prime(30))  # False
+print(is_prime(2))   # True
+print(is_prime(1))   # False

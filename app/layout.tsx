@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import ThemeToggle from "./components/ThemeToggle";
+import "katex/dist/katex.min.css";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -15,7 +16,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const siteUrl = "https://dsa-daily-practice.vercel.app";
+const siteUrl = "https://algo.ppradosh.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

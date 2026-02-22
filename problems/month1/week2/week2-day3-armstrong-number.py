@@ -1,61 +1,54 @@
 """
 Problem Statement:
-An Armstrong number (also called a Narcissistic number) of N digits is a number where the sum of each digit raised to the power of N equals the number itself. For example, 153 is Armstrong because 1^3 + 5^3 + 3^3 = 153. Check if a given number is an Armstrong number.
+A number is an Armstrong number (narcissistic number) if it equals the sum of its own digits each raised to the power of the number of digits. For example, $153 = 1^3 + 5^3 + 3^3$. Write a function that returns True if a number is an Armstrong number.
 
 Intuition:
-This is another application of the digit extraction pattern. First, count how many digits the number has (this determines the power N). Then extract each digit, raise it to the Nth power, and sum them up. If the sum equals the original number, it is an Armstrong number. The key insight is making the power dynamic based on digit count, not hardcoded to 3.
+For a number with $d = \lfloor \log_{10} N \rfloor + 1$ digits, it is Armstrong if $N = \sum_{i} d_i^d$ where $d_i$ are its digits. The key insight is that you need the total digit count **before** summing — compute it once, then extract each digit using the modulo loop from Day 1.
 
 Approach:
-1. Count the number of digits using a helper function (repeatedly divide by 10 and count).
-2. Store the original number.
-3. Extract each digit using % 10, raise it to the power of num_digits, and add to a running sum.
-4. Remove the digit with // 10. Repeat until the number is 0.
-5. Compare the sum with the original — if equal, it is an Armstrong number.
+1. Count the number of digits: `d = len(str(n))` or using $\lfloor \log_{10} N \rfloor + 1$.
+2. Extract digits one by one using `n % 10` and `n // 10`.
+3. For each digit, raise it to the power `d` and add to a running sum.
+4. Compare the sum to the original number.
 
 Time Complexity:
-O(log N) where N is the value of the number — we process each digit once (twice with digit counting)
+$O(\log_{10} N)$ — proportional to the number of digits
 
 Space Complexity:
-O(1) — only a few integer variables
+$O(1)$ — only integer variables
 
 Common Mistakes:
-- Hardcoding the power to 3, which only works for 3-digit numbers (fails for 1634, a 4-digit Armstrong number: 1^4 + 6^4 + 3^4 + 4^4 = 1634)
-- Forgetting to preserve the original number before extracting digits
-- Not handling 0 correctly as an edge case (0 is technically an Armstrong number: 0^1 = 0)
-- Negative numbers should return False
+- Computing the number of digits inside the loop (recalculated wrongly as digits are removed)
+- Using `n % 10` after modifying `n` without saving the original — always save `original = n`
+- Only testing single-digit numbers (1–9 are trivially Armstrong); test 153, 370, 371, 407
+
+Code Explanation:
+- `original = n`: Save the input so we can compare at the end (the loop will consume `n`).
+- `num_digits = len(str(n))`: Count digits by converting to string; `len("153") == 3`.
+- `armstrong_sum = 0`: Running total of digit^power values.
+- `while n > 0`: Extract digits one at a time.
+- `digit = n % 10`: Last digit of the remaining number.
+- `armstrong_sum += digit ** num_digits`: Raise to the power of total digits and accumulate.
+- `n = n // 10`: Remove the last digit.
+- `return armstrong_sum == original`: True if the digit-power sum equals the original number.
 
 Final Thoughts:
-Armstrong number checking reinforces the digit extraction loop and adds the concept of dynamic power based on digit count. The helper function for counting digits is a good exercise in code modularity. Some known Armstrong numbers: 0, 1, 153, 370, 371, 407, 1634, 8208, 9474.
+Armstrong numbers combine two patterns you've already seen: digit extraction (Day 1, Day 2) and exponentiation. The important lesson here is to compute `num_digits` **once before the loop**, not inside it.
 """
 
-# Check for Armstrong Number
-# An Armstrong number (for the purpose of this basic exercise, we'll focus on 3-digit numbers) is a number that equals the sum of its digits each raised to the power of 3.Input: 153Calculation: 1^3 + 5^3 + 3^3 = 1 + 125 + 27 = 153
-# Output: True Input: 123
-# Calculation: 1^3 + 2^3 + 3^3 = 1 + 8 + 27 = 36
-# Output: FalseGeneral Rule (for extra credit):Strictly speaking, an Armstrong number of N digits is the sum of its digits raised to the power of N. (e.g., for 1634, N=4: 1^4 + 6^4 + 3^4 + 4^4 = 1634).Goal: Write a function that checks if a number is an Armstrong number. You can stick to the power of 3 for now, or make it dynamic based on the number of digits (more robust).
+# Week 2 Day 3: Armstrong Number
+# A number is an Armstrong number if it equals the sum of its digits each raised to the power of the number of digits.
 
-def number_of_digits(num):
-    if num == 0:
-        return 1
-    digits = 0
-    while num > 0:
-        num //= 10
-        digits += 1
-    
-    return digits
+def is_armstrong(n):
+    original = n
+    num_digits = len(str(n))
+    armstrong_sum = 0
+    while n > 0:
+        digit = n % 10
+        armstrong_sum += digit ** num_digits
+        n = n // 10
+    return armstrong_sum == original
 
-def is_armstrong(num):
-    if num < 0:
-        return False
-    num_digits = number_of_digits(num)
-    sum_of_power = 0
-    original = num
-
-    while num > 0:
-        digit = num % 10
-        sum_of_power += digit ** num_digits
-        num //= 10
-    
-    return sum_of_power == original
-
-print(is_armstrong(153))
+print(is_armstrong(153))  # True
+print(is_armstrong(370))  # True
+print(is_armstrong(123))  # False

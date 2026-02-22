@@ -1,63 +1,60 @@
 """
 Problem Statement:
-Given a positive integer n, return a list of all its prime factors (with repetition). Input: 12 → [2, 2, 3] (because 2×2×3 = 12). Input: 315 → [3, 3, 5, 7]. Input: 13 → [13] (prime number). The output should be sorted in ascending order.
+Given an integer $N$, return its prime factorization as a list of prime factors. For example, $12 = 2 \times 2 \times 3$, so the output is [2, 2, 3]. $N = 1$ returns an empty list.
 
 Intuition:
-The approach mirrors the prime check optimization: only test divisors up to √n. First, extract all factors of 2 (the only even prime). Then test odd numbers from 3 upward up to √n. If after this process n > 1, whatever remains must itself be a prime factor. The factors naturally come out sorted because we test small divisors first.
+Repeatedly divide $N$ by the smallest possible prime factor. Start with 2 (to handle all even factors), then check only odd numbers from 3 to $\sqrt{N}$. If $N > 1$ after the loop, the remaining value is itself a prime factor (the largest one).
 
 Approach:
-1. Extract all factors of 2: while n is even, append 2 and divide n by 2.
-2. Start d = 3. While d * d ≤ n, check if d divides n. If yes, append d and divide. Otherwise increment d by 2 (skip even numbers).
-3. If n > 1 after the loop, n itself is a prime factor — append it.
-4. Return the list of factors.
+1. Initialize an empty list `factors`.
+2. While $N$ is divisible by 2, append 2 and divide $N$ by 2.
+3. For odd divisors $i = 3, 5, 7, \ldots$ up to $\sqrt{N}$: while $N$ is divisible by $i$, append $i$ and divide.
+4. If $N > 1$ after the loop, $N$ is a prime — append it.
 
 Time Complexity:
-O(√N) — we only check divisors up to the square root
+$O(\sqrt{N})$ for the trial division loop
 
 Space Complexity:
-O(log N) — the number of prime factors is at most log2(N) (when n is a power of 2)
+$O(1)$ — constant extra space (excluding the output list)
 
 Common Mistakes:
-- Iterating up to n instead of √n, making it O(N) which is too slow for large inputs
-- Forgetting the final check if n > 1 (this misses the largest prime factor)
-- Not handling the factor 2 separately, then trying to skip even numbers (leads to missing 2 as a factor)
-- Using a primality test for each potential factor — unnecessary since non-primes will never divide n after their prime components have been extracted
+- Only dividing by each factor once instead of looping (misses repeated factors, e.g., `12 = 2 × 2 × 3`)
+- Not handling the "remaining prime" case after the loop — e.g., `14 = 2 × 7`; after dividing by 2, `n = 7 > 1`, so 7 must be appended
+- Checking only up to $\sqrt{\text{original } N}$ instead of dynamically comparing to $i^2 \leq n$ (the latter is correct since $n$ shrinks)
+
+Code Explanation:
+- `factors = []`: List to collect all prime factors.
+- `while n % 2 == 0`: Handle all factors of 2 first (the only even prime).
+- `factors.append(2); n //= 2`: Append 2 and divide out all 2s.
+- `i = 3`: Start checking odd divisors from 3.
+- `while i * i <= n`: Loop while `i` could still be a factor; equivalent to `i <= sqrt(n)`.
+- `while n % i == 0`: Divide out all occurrences of `i` (handles repeated factors like $8 = 2^3$).
+- `factors.append(i); n //= i`: Append factor and shrink `n`.
+- `i += 2`: Skip even numbers (already handled by the `%2` check).
+- `if n > 1: factors.append(n)`: Any remaining value greater than 1 is a prime factor (couldn't be divided by anything up to its own $\sqrt{}$).
 
 Final Thoughts:
-Prime factorization ties together the √N optimization from is_prime and the digit extraction loop pattern. The elegance of this algorithm is that you don't need a list of primes — by dividing out each factor completely before moving on, non-prime candidates automatically become irrelevant. This is used in cryptography, simplifying fractions, and computing LCM.
+Prime factorization underlies RSA encryption: factoring a large number $N = p \times q$ is computationally infeasible for huge primes, while multiplying them is easy. The "remaining prime" optimization after the loop is elegant — it's the key insight that keeps this solution correct and $O(\sqrt{N})$.
 """
 
-# The Problem: Prime Factorization
-# Given a positive integer n, return a list of all its prime factors.
-# Input: 12 → Output: [2, 2, 3] (2×2×3=12)
-# Input: 315 → Output: [3, 3, 5, 7]
-# Input: 13 → Output: [13] (It's a prime number)
-# Constraints:
-# Time Complexity must be O(sqrt(N)). You cannot iterate up to n.
-# The output list should be sorted (naturally happens if you solve it correctly).
+# Week 2 Day 7: Prime Factorization
+# Given an integer N, return its prime factorization as a list.
 
-def get_prime_factors(n):
-    prime_factors = []
-    d = 2
-
-    while n > 0 and n % 2 == 0:
-        prime_factors.append(2)
-        n = n // 2
-
-    d = 3
-    while d * d <= n:
-        while n % d == 0:
-            prime_factors.append(d)
-            n = n // d
-        d += 2
-    
+def prime_factorization(n):
+    factors = []
+    while n % 2 == 0:
+        factors.append(2)
+        n //= 2
+    i = 3
+    while i * i <= n:
+        while n % i == 0:
+            factors.append(i)
+            n //= i
+        i += 2
     if n > 1:
-        prime_factors.append(n)
-    
-    return prime_factors
-            
+        factors.append(n)
+    return factors
 
-print(get_prime_factors(12))
-print(get_prime_factors(315))
-print(get_prime_factors(13))
-print(get_prime_factors(9))
+print(prime_factorization(12))   # [2, 2, 3]
+print(prime_factorization(100))  # [2, 2, 5, 5]
+print(prime_factorization(97))   # [97] (prime)

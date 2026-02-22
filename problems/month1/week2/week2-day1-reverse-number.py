@@ -1,57 +1,59 @@
 """
 Problem Statement:
-Given a signed 32-bit integer x, return x with its digits reversed. Input: 123 → Output: 321. Input: -123 → Output: -321. Input: 120 → Output: 21 (no leading zeros). Solve this using math only — no string conversion allowed.
+Given an integer, reverse its digits. For example, 1234 becomes 4321, and -1234 becomes -4321. Note: If the reversed number would overflow a 32-bit integer range $[-2^{31}, 2^{31}-1]$, return 0.
 
 Intuition:
-The key mathematical insight is that you can extract digits from right to left using modulo (% 10) and build the reversed number by multiplying the accumulator by 10 before adding each digit. This is the digit extraction pattern: repeatedly divide by 10 (integer division) to strip the last digit, and use modulo 10 to capture it.
+Reversing digits mathematically uses the modular operator to extract the last digit and integer division to remove it: $\text{last\_digit} = n \bmod 10$, then $n = \lfloor n / 10 \rfloor$. The extracted digit is appended to the reversed number by shifting left: $\text{result} = \text{result} \times 10 + \text{last\_digit}$.
 
 Approach:
-1. Handle the sign separately: store the sign, then work with the absolute value.
-2. Initialize reverse = 0.
-3. While x > 0: extract the last digit with digit = x % 10, then build reverse = reverse * 10 + digit, then remove the last digit with x = x // 10.
-4. Multiply the result by the stored sign and return.
+1. Handle the sign: store `is_negative = n < 0` and work with `abs(n)`.
+2. While `n > 0`, extract the last digit via `n % 10` and append to result via `result = result * 10 + digit`.
+3. Remove the last digit with `n = n // 10`.
+4. After the loop, reapply the sign if needed.
+5. Check overflow: if the result is outside $[-2^{31}, 2^{31}-1]$, return 0.
 
 Time Complexity:
-O(log N) where N is the value of the number — the number of digits is proportional to log10(N)
+$O(\log_{10} N)$ — the number of iterations equals the number of digits in $N$
 
 Space Complexity:
-O(1) — only a few integer variables are used
+$O(1)$ — only a few integer variables
 
 Common Mistakes:
-- Converting to string and reversing (str(x)[::-1]) — this bypasses the mathematical technique the problem is testing
-- Forgetting to handle the sign: -123 reversed as 321- is invalid
-- Not handling trailing zeros in the input: 120 should become 21, not 021
-- In languages with fixed integer sizes, not checking for 32-bit overflow after reversal
+- Using Python string conversion (`str(n)[::-1]`) — correct but doesn't handle the overflow check naturally
+- Not preserving the sign: using `abs()` but forgetting to reapply negative sign
+- Integer overflow: Python has unlimited integers, so you must manually check the 32-bit bounds
+
+Code Explanation:
+- `is_negative = n < 0`: Captures the sign before taking absolute value.
+- `n = abs(n)`: Work with a positive number to simplify the math.
+- `result = 0`: Accumulator for the reversed number.
+- `while n > 0`: Continues as long as there are digits remaining.
+- `digit = n % 10`: Extracts the last digit using modulo (e.g., `1234 % 10 = 4`).
+- `result = result * 10 + digit`: Shifts result left by one decimal place, then appends the new digit.
+- `n = n // 10`: Removes the last digit using integer division (e.g., `1234 // 10 = 123`).
+- `if is_negative: result = -result`: Reapplies the negative sign.
+- `if result < -2**31 or result > 2**31 - 1: return 0`: 32-bit overflow check.
 
 Final Thoughts:
-The digit extraction pattern (% 10 to get, // 10 to remove) is fundamental. You will use it again in palindrome number checking, Armstrong numbers, and many other number theory problems. Master this loop pattern here.
+This problem teaches digit-by-digit decomposition using modulo and integer division — a pattern that reappears in Armstrong number checks, palindrome number checks, and digit sum calculations.
 """
 
-# Reverse a Number (The Math Way)
-# Extracting digits without string conversion
-# The Problem: Reverse IntegerGiven a signed 32-bit integer x, return x with its digits reversed.
-# Input: 123 -> Output: 321
-# Input: -123 -> Output: -321
-# Input: 120 -> Output: 21 (No leading zeros)
+# Week 2 Day 1: Reverse a Number
+# Given an integer, reverse its digits. e.g. 1234 -> 4321.
 
-def reverse_integer(x):
-    if x == 0:
+def reverse_number(n):
+    is_negative = n < 0
+    n = abs(n)
+    result = 0
+    while n > 0:
+        digit = n % 10
+        result = result * 10 + digit
+        n = n // 10
+    if is_negative:
+        result = -result
+    if result < -2**31 or result > 2**31 - 1:
         return 0
-    
-    if x > 0:
-        sign = 1
-    else:
-        sign = -1
-        x = -x
-    
-    reverse = 0
-    while x > 0:
-        digit = x % 10
-        reverse = reverse * 10 + digit
-        x = x // 10
-    
-    return sign * reverse
+    return result
 
-print(reverse_integer(123))
-print(reverse_integer(-123))
-print(reverse_integer(120))
+print(reverse_number(1234))   # 4321
+print(reverse_number(-1234))  # -4321

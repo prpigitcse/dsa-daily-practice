@@ -22,6 +22,7 @@ export interface ParsedSections {
     spaceComplexity: string;
     commonMistakes: string;
     finalThoughts: string;
+    codeExplanation: string;
     code: string;
 }
 
@@ -190,6 +191,7 @@ export function parsePythonFile(filePath: string): ParsedSections {
         spaceComplexity: "",
         commonMistakes: "",
         finalThoughts: "",
+        codeExplanation: "",
         code: "",
     };
 
@@ -216,6 +218,7 @@ function parseDocstringSections(docstring: string): ParsedSections {
         spaceComplexity: "",
         commonMistakes: "",
         finalThoughts: "",
+        codeExplanation: "",
         code: "",
     };
 
@@ -227,6 +230,7 @@ function parseDocstringSections(docstring: string): ParsedSections {
         "space complexity": "spaceComplexity",
         "common mistakes": "commonMistakes",
         "final thoughts": "finalThoughts",
+        "code explanation": "codeExplanation",
     };
 
     let currentKey: keyof ParsedSections | null = null;
@@ -244,10 +248,19 @@ function parseDocstringSections(docstring: string): ParsedSections {
             }
         }
 
-        if (currentKey && trimmed) {
-            sections[currentKey] += (sections[currentKey] ? "\n" : "") + trimmed;
+        if (currentKey) {
+            // Preserve the line as is (including whitespace and empty lines) 
+            // once we are inside a section, to allow proper Markdown rendering.
+            sections[currentKey] += (sections[currentKey] ? "\n" : "") + line;
         }
     }
+
+    // Final trim for each section to remove leading/trailing whitespace from the accumulation
+    (Object.keys(sections) as Array<keyof ParsedSections>).forEach((key) => {
+        if (typeof sections[key] === "string") {
+            sections[key] = sections[key].trim();
+        }
+    });
 
     return sections;
 }
@@ -275,6 +288,7 @@ function parseCommentSections(content: string): ParsedSections {
         spaceComplexity: "",
         commonMistakes: "",
         finalThoughts: "",
+        codeExplanation: "",
         code: "",
     };
 }
