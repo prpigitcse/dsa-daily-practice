@@ -19,7 +19,7 @@ export default function Home() {
               "@context": "https://schema.org",
               "@type": "WebSite",
               name: "Algorithm Logbook",
-              url: "https://dsa-daily-practice.vercel.app",
+              url: "https://algo.ppradosh.com",
               description:
                 "Master Data Structures & Algorithms one problem at a time. A free, structured, consistency-driven learning platform.",
             },
@@ -32,7 +32,7 @@ export default function Home() {
                 "@type": "ListItem",
                 position: i + 1,
                 name: p.title,
-                url: `https://dsa-daily-practice.vercel.app${p.href}`,
+                url: `https://algo.ppradosh.com${p.href}`,
               })),
             },
           ]),

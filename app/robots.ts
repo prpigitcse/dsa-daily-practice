@@ -8,6 +8,6 @@ export default function robots(): MetadataRoute.Robots {
                 allow: "/",
             },
         ],
-        sitemap: "https://dsa-daily-practice.vercel.app/sitemap.xml",
+        sitemap: "https://algo.ppradosh.com/sitemap.xml",
     };
 }

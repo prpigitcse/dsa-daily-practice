@@ -114,7 +114,7 @@ export default async function ProblemPage({ params }: PageProps) {
     ]);
 
     // JSON-LD Structured Data
-    const siteUrl = "https://dsa-daily-practice.vercel.app";
+    const siteUrl = "https://algo.ppradosh.com";
     const jsonLd = [
         {
             "@context": "https://schema.org",
