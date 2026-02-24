@@ -2,6 +2,10 @@
   "name": "algorithm-logbook",
   "version": "0.1.0",
   "private": true,
+  "author": {
+    "name": "Pradosh Ranjan Pattanayak",
+    "url": "https://ppradosh.com"
+  },
   "scripts": {
     "dev": "next dev",
     "prebuild": "tsx lib/ensureMetadata.ts",
