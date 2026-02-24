@@ -1,4 +1,7 @@
 """
+Pattern:
+Recursion
+
 Problem Statement:
 Write a recursive function `power(x, n)` that calculates $x^n$. Input: $x = 2, n = 10$ → Output: 1024. You must use recursion and must not use the `**` operator. Naive multiplication is $O(N)$ — achieve $O(\log N)$.
 

@@ -1,4 +1,7 @@
 """
+Pattern:
+Recursion
+
 Problem Statement:
 Write a function `factorial(n)` that returns $n!$ (n factorial). $n! = n \times (n-1) \times (n-2) \times \cdots \times 1$. By definition, $0! = 1$. Input: 5 → Output: 120. You must use recursion — no for or while loops allowed.
 

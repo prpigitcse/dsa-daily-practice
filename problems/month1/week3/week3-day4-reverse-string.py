@@ -1,4 +1,7 @@
 """
+Pattern:
+Recursion
+
 Problem Statement:
 Write a recursive function `reverse_string(s)` that returns the reversed string. Input: "hello" → Output: "olleh". Input: "abc" → Output: "cba". You must use recursion — no loops or `[::-1]`.
 

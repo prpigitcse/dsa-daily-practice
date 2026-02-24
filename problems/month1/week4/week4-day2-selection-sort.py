@@ -1,4 +1,7 @@
 """
+Pattern:
+Sorting
+
 Problem Statement:
 Given an unsorted array of integers, sort it in ascending order using Selection Sort. Modify the array in-place ($O(1)$ extra space). Input: [64, 25, 12, 22, 11] → Output: [11, 12, 22, 25, 64]. Do not use built-in sort functions.
 

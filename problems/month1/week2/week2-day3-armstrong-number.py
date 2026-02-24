@@ -1,4 +1,7 @@
 """
+Pattern:
+Basic Math
+
 Problem Statement:
 A number is an Armstrong number (narcissistic number) if it equals the sum of its own digits each raised to the power of the number of digits. For example, $153 = 1^3 + 5^3 + 3^3$. Write a function that returns True if a number is an Armstrong number.
 

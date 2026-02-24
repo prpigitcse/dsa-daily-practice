@@ -23,6 +23,7 @@ export interface ParsedSections {
     commonMistakes: string;
     finalThoughts: string;
     codeExplanation: string;
+    pattern: string;
     code: string;
 }
 
@@ -192,6 +193,7 @@ export function parsePythonFile(filePath: string): ParsedSections {
         commonMistakes: "",
         finalThoughts: "",
         codeExplanation: "",
+        pattern: "",
         code: "",
     };
 
@@ -219,6 +221,7 @@ function parseDocstringSections(docstring: string): ParsedSections {
         commonMistakes: "",
         finalThoughts: "",
         codeExplanation: "",
+        pattern: "",
         code: "",
     };
 
@@ -231,6 +234,7 @@ function parseDocstringSections(docstring: string): ParsedSections {
         "common mistakes": "commonMistakes",
         "final thoughts": "finalThoughts",
         "code explanation": "codeExplanation",
+        "pattern": "pattern",
     };
 
     let currentKey: keyof ParsedSections | null = null;
@@ -289,6 +293,7 @@ function parseCommentSections(content: string): ParsedSections {
         commonMistakes: "",
         finalThoughts: "",
         codeExplanation: "",
+        pattern: "",
         code: "",
     };
 }

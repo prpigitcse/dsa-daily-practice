@@ -1,4 +1,7 @@
 """
+Pattern:
+Basic Search
+
 Problem Statement:
 Given an array `arr[]` and an integer `target`, return the index of the target element. If the target is not found, return -1. The array is not necessarily sorted.
 

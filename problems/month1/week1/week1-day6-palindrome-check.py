@@ -1,4 +1,7 @@
 """
+Pattern:
+Two Pointers
+
 Problem Statement:
 Given a string, return True if it reads the same forward and backward, and False otherwise. For example, "racecar" is a palindrome, "hello" is not. A single character like "a" is always a palindrome.
 

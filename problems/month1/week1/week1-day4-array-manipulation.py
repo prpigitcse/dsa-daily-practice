@@ -1,4 +1,7 @@
 """
+Pattern:
+Array
+
 Problem Statement:
 Given an array `arr`, reverse the order of elements in-place. You must modify the original array directly without creating a new array. Input: [10, 20, 30, 40, 50] → Output: [50, 40, 30, 20, 10].
 

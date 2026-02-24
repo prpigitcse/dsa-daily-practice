@@ -1,4 +1,7 @@
 """
+Pattern:
+Array
+
 Problem Statement:
 Given an array of integers, find the second largest element. For example, given [10, 5, 20, 8], the output is 10. If all elements are the same (e.g., [10, 10, 10]) or the array has fewer than 2 elements, return -1 or None.
 

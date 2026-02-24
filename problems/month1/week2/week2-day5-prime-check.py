@@ -1,4 +1,7 @@
 """
+Pattern:
+Basic Math
+
 Problem Statement:
 Given an integer $N$, determine if it is a prime number. A prime is a number greater than 1 that has no divisors other than 1 and itself. Input: 29 → True. Input: 30 → False.
 

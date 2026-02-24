@@ -1,4 +1,7 @@
 """
+Pattern:
+Basic Math
+
 Problem Statement:
 Given an integer $N$, return a list of all prime numbers from 2 to $N$ (inclusive) using the Sieve of Eratosthenes algorithm. For example, $N = 30$ → [2, 3, 5, 7, 11, 13, 17, 19, 23, 29].
 

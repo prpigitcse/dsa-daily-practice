@@ -1,4 +1,7 @@
 """
+Pattern:
+Recursion
+
 Problem Statement:
 Write a recursive function `is_palindrome(s)` that returns True if the string reads the same forward and backward, and False otherwise. Input: "racecar" → True. Input: "hello" → False. You must use recursion.
 

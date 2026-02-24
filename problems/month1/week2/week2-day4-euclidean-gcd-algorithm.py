@@ -1,4 +1,7 @@
 """
+Pattern:
+Basic Math
+
 Problem Statement:
 Given two integers `a` and `b`, find their Greatest Common Divisor (GCD) using the Euclidean Algorithm. Also compute the Least Common Multiple (LCM) using $\text{LCM}(a, b) = \frac{a \times b}{\gcd(a, b)}$.
 

@@ -1,4 +1,7 @@
 """
+Pattern:
+Sorting
+
 Problem Statement:
 Given an unsorted array of integers, sort it in ascending order using Bubble Sort. Modify the array in-place ($O(1)$ extra space). Input: [5, 1, 4, 2, 8] → Output: [1, 2, 4, 5, 8]. Do not use built-in sort functions. Implement both iterative and recursive versions.
 

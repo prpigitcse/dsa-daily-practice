@@ -1,4 +1,7 @@
 """
+Pattern:
+Analysis
+
 Problem Statement:
 Write a function that calculates the sum of all natural numbers from 1 to N. Implement two approaches: a loop-based $O(N)$ solution and a formula-based $O(1)$ solution using the Gauss identity $\frac{N(N+1)}{2}$.
 

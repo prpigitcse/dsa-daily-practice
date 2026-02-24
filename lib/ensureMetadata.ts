@@ -15,6 +15,9 @@ import path from "path";
 const PROBLEMS_DIR = path.join(process.cwd(), "problems");
 
 const PLACEHOLDER_DOCSTRING = `"""
+Pattern:
+<Add pattern name>
+
 Problem Statement:
 <Add clear problem description>
 
@@ -59,6 +62,10 @@ function hasDocstring(content: string): boolean {
     return /^"""/m.test(content);
 }
 
+function hasPattern(content: string): boolean {
+    return /^Pattern:/m.test(content);
+}
+
 function ensureMetadata(): void {
     const files = walkPyFiles(PROBLEMS_DIR);
     let updated = 0;
@@ -71,6 +78,9 @@ function ensureMetadata(): void {
             fs.writeFileSync(filePath, newContent, "utf-8");
             updated++;
             console.log(`✅ Injected docstring: ${path.relative(process.cwd(), filePath)}`);
+        } else if (!hasPattern(content)) {
+            // If docstring exists but Pattern is missing, warn or could auto-inject
+            console.warn(`⚠️  Missing Pattern section: ${path.relative(process.cwd(), filePath)}`);
         }
     }
 

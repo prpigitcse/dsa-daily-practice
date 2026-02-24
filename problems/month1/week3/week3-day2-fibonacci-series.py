@@ -1,4 +1,7 @@
 """
+Pattern:
+Recursion
+
 Problem Statement:
 Write a recursive function `fib(n)` that returns the $n$-th Fibonacci number. The sequence is: $F(0) = 0,\; F(1) = 1,\; F(n) = F(n-1) + F(n-2)$ for $n > 1$. Input: 6 → Output: 8. Input: 7 → Output: 13.
 

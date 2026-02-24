@@ -102,6 +102,7 @@ export default async function ProblemPage({ params }: PageProps) {
         commonMistakesHtml,
         finalThoughtsHtml,
         codeExplanationHtml,
+        patternHtml,
     ] = await Promise.all([
         renderMarkdown(sections.problemStatement),
         renderMarkdown(sections.intuition),
@@ -111,6 +112,7 @@ export default async function ProblemPage({ params }: PageProps) {
         renderMarkdown(sections.commonMistakes),
         renderMarkdown(sections.finalThoughts),
         renderMarkdown(sections.codeExplanation),
+        renderMarkdown(sections.pattern),
     ]);
 
     // JSON-LD Structured Data
@@ -200,15 +202,12 @@ export default async function ProblemPage({ params }: PageProps) {
                         <MarkComplete slug={problem.slug} />
                     </div>
                     <div className="flex items-center gap-2 text-sm text-muted">
-                        <span className="px-2 py-0.5 rounded-md bg-muted-bg font-medium">
-                            Month {problem.month}
-                        </span>
-                        <span className="px-2 py-0.5 rounded-md bg-muted-bg font-medium">
-                            Week {problem.week}
-                        </span>
-                        <span className="px-2 py-0.5 rounded-md bg-muted-bg font-medium">
-                            Day {problem.day}
-                        </span>
+                        {patternHtml && (
+                            <span className="flex items-center gap-2 px-2 py-0.5 rounded-md bg-accent/10 text-accent font-semibold border border-accent/20">
+                                <span className="w-2 h-2 rounded-full bg-accent animate-pulse shrink-0" />
+                                <span>{patternHtml.replace(/<[^>]*>/g, '').trim()}</span>
+                            </span>
+                        )}
                     </div>
                 </header>
 

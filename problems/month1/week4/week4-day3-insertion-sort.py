@@ -1,4 +1,7 @@
 """
+Pattern:
+Sorting
+
 Problem Statement:
 Given an unsorted array of integers, sort it in ascending order using the Insertion Sort algorithm. Modify the array in-place ($O(1)$ extra space). 
 Input: [12, 11, 13, 5, 6] → Output: [5, 6, 11, 12, 13]. 

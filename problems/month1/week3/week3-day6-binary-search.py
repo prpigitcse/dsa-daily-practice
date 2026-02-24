@@ -1,4 +1,7 @@
 """
+Pattern:
+Binary Search
+
 Problem Statement:
 Given a sorted array `arr` and a target value, return the index of the target using recursive binary search. If not found, return None. Input: arr = [2, 5, 8, 12, 16, 23, 38, 56, 72, 91], target = 23 → Output: 5.
 

@@ -1,4 +1,7 @@
 """
+Pattern:
+Basic Math
+
 Problem Statement:
 Given an integer $N$, return its prime factorization as a list of prime factors. For example, $12 = 2 \times 2 \times 3$, so the output is [2, 2, 3]. $N = 1$ returns an empty list.
 

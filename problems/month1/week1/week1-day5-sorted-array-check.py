@@ -1,4 +1,7 @@
 """
+Pattern:
+Array
+
 Problem Statement:
 Write a function that returns True if an array is sorted in ascending order, and False otherwise. For example, [1, 2, 3, 4, 5] returns True, while [1, 2, 3, 5, 4] returns False.
 

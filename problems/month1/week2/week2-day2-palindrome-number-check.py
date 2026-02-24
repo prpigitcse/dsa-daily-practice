@@ -1,4 +1,7 @@
 """
+Pattern:
+Basic Math
+
 Problem Statement:
 Given an integer, determine if it is a palindrome. An integer is a palindrome if it reads the same forward and backward. For example, 121 is a palindrome; -121 and 10 are not. Return True or False.
 

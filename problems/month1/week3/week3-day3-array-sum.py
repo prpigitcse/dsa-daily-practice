@@ -1,4 +1,7 @@
 """
+Pattern:
+Recursion
+
 Problem Statement:
 Write a recursive function `sum_array(arr)` that returns the sum of all elements in an array. Input: [1, 2, 3, 4, 5] → Output: 15. Input: [] → Output: 0. No for or while loops allowed.
 
