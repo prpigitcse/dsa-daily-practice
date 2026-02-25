@@ -85,9 +85,11 @@ body {
   width: 6px;
   height: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background: var(--muted);
   border-radius: 3px;
@@ -102,4 +104,46 @@ body {
 /* ─── Transitions ─────────────────────────────────────────────────────────── */
 * {
   transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* ─── Tables ─────────────────────────────────────────────────────────────── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem 0;
+  font-size: 0.875rem;
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  display: table;
+}
+
+th {
+  background-color: var(--muted-bg);
+  color: var(--foreground);
+  font-weight: 600;
+  text-align: left;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--card-border);
+}
+
+td {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--card-border);
+  color: var(--muted);
+  transition: background-color 0.2s ease;
+}
+
+tr:hover td {
+  background-color: var(--muted-bg);
+  color: var(--foreground);
+}
+
+/* Mobile Responsive Table */
+@media (max-width: 640px) {
+  table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
 }
