@@ -35,7 +35,7 @@ Code Explanation:
 - `return arr`: Returns the same array object (modified in-place).
 
 Final Thoughts:
-The two-pointer technique is one of the most important patterns in DSA. Mastering it here on a simple reversal problem prepares you for harder problems like palindrome checking, container with most water, and two-sum on sorted arrays.
+The two-pointer technique is one of the most important patterns in DSA. Mastering it here on a simple reversal problem prepares for harder problems like palindrome checking, container with most water, and two-sum on sorted arrays.
 """
 
 # Array Manipulation (In-Place)
@@ -44,7 +44,7 @@ The two-pointer technique is one of the most important patterns in DSA. Masterin
 def reverse_array(arr):
     left = 0
     right = len(arr) - 1
-    while left < right:
+    while left <= right:
         arr[left], arr[right] = arr[right], arr[left]
         left += 1
         right -= 1
