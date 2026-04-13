@@ -27,7 +27,7 @@ Common Mistakes:
 - Forgetting edge cases: empty string `""` and single character `"a"` are both palindromes
 
 Code Explanation:
-- `def palindrom_check(s)`: Takes the string to check. (Note: the function name has a deliberate typo — `palindrom` instead of `palindrome`.)
+- `def palindrome_check(s)`: Takes the string to check.
 - `left = 0` and `right = len(s) - 1`: Initialize both pointers at opposite ends of the string.
 - `while left < right`: Stops when pointers would overlap; the middle character (for odd-length strings) doesn't need checking.
 - `if s[left] != s[right]: return False`: Mismatch found; immediately signals not a palindrome.
@@ -40,7 +40,7 @@ This problem reinforces the two-pointer pattern from Day 4 (Array Reversal). Str
 
 # Question: Given a string (e.g., "racecar" or "hello"), return True if it reads the same forward and backward.
 
-def palindrom_check(s):
+def palindrome_check(s):
     left = 0
     right = len(s) - 1
 
@@ -51,6 +51,6 @@ def palindrom_check(s):
         right -= 1
     return True
 
-print(palindrom_check("racecar"))  # True
-print(palindrom_check("hello"))    # False
-print(palindrom_check("a"))        # True
+print(palindrome_check("racecar"))  # True
+print(palindrome_check("hello"))    # False
+print(palindrome_check("a"))        # True
